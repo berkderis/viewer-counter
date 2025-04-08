@@ -1,20 +1,23 @@
+function animateCounter(element, start, end, duration = 2000) {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const currentValue = Math.floor(progress * (end - start) + start);
+        element.textContent = currentValue;
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        }
+    };
+    window.requestAnimationFrame(step);
+}
 
-
-// GitHub'daki kodunuza şu değişiklikleri ekleyin
+// API'den sayıyı al
 fetch('https://counter.fuzem-com.workers.dev/')
-  .then(response => response.json())
-  .then(data => {
-    console.log("API yanıtı alındı:", data); // API yanıtını görelim
-    
-    // aktif ziyaretçi sayısını göster
-    const viewerCount = document.getElementById('viewer-count');
-    if (viewerCount) {
-      console.log("Eleman bulundu, değer güncelleniyor:", data.active_visitors);
-      viewerCount.textContent = data.active_visitors;
-    } else {
-      console.error("viewer-count elemanı bulunamadı!");
-    }
-  })
-  .catch(error => {
-    console.error("API hatası:", error);
-  });
+    .then(response => response.json())
+    .then(data => {
+        const counterElement = document.getElementById('viewer-count');
+        const startValue = 0;
+        const endValue = data.count;
+        animateCounter(counterElement, startValue, endValue);
+    });

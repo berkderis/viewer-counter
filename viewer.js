@@ -34,4 +34,4 @@ function updateCounter() {
 
 // Sayacı başlat ve her 30 saniyede bir güncelle
 updateCounter();
-setInterval(updateCounter, 30000);
+setInterval(updateCounter, 10000);

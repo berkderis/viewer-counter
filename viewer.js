@@ -1,18 +1,29 @@
-fetch('https://counter.fuzem-com.workers.dev/')
-  .then(response => response.json())
+
+// API URL'inizi ayarlayın
+const apiUrl = 'https://counter.fuzem-com.workers.dev/';
+
+// API'den verileri al
+fetch(apiUrl)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('API yanıtı başarısız: ' + response.status);
+    }
+    return response.json();
+  })
   .then(data => {
-    console.log("API response:", data); // API yanıtını konsola yazdır
+    console.log("API yanıtı:", data); // Kontrol amaçlı
     
-    const visitorElement = document.getElementById('viewer-count');
-    console.log("Element found:", visitorElement); // Element var mı kontrol et
+    // DOM elemanına erişim
+    const counterElement = document.getElementById('viewer-count');
     
-    if (visitorElement) {
-      visitorElement.textContent = data.active_visitors;
-      console.log("Element updated with:", data.active_visitors);
+    // Element varsa değeri güncelle
+    if (counterElement) {
+      counterElement.textContent = data.active_visitors;
+      console.log("Sayaç güncellendi:", data.active_visitors);
     } else {
-      console.error("Element with ID 'active-visitors' not found!");
+      console.error("'viewer-count' ID'li eleman bulunamadı!");
     }
   })
   .catch(error => {
-    console.error("Error fetching visitor data:", error);
+    console.error("Hata:", error);
   });

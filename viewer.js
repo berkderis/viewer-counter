@@ -3,7 +3,7 @@ fetch('https://counter.fuzem-com.workers.dev/')
   .then(data => {
     console.log("API response:", data); // API yanıtını konsola yazdır
     
-    const visitorElement = document.getElementById('viewer-counter');
+    const visitorElement = document.getElementById('viewer-count');
     console.log("Element found:", visitorElement); // Element var mı kontrol et
     
     if (visitorElement) {

@@ -1,17 +1,18 @@
-(async function() {
-  try {
-    // Mevcut sayfanın yolunu alıyoruz
-    const currentPath = window.location.pathname;
+fetch('https://counter.fuzem-com.workers.dev/')
+  .then(response => response.json())
+  .then(data => {
+    console.log("API response:", data); // API yanıtını konsola yazdır
     
-    const res = await fetch(`https://viewer-counter.fuzem.workers.dev${currentPath}`, {
-      mode: "cors"
-    });
-    const data = await res.json();
-    const el = document.getElementById("viewer-count");
-    if (el && data.count) {
-      el.textContent = new Intl.NumberFormat('tr-TR').format(data.count);
+    const visitorElement = document.getElementById('viewer-count');
+    console.log("Element found:", visitorElement); // Element var mı kontrol et
+    
+    if (visitorElement) {
+      visitorElement.textContent = data.active_visitors;
+      console.log("Element updated with:", data.active_visitors);
+    } else {
+      console.error("Element with ID 'active-visitors' not found!");
     }
-  } catch (e) {
-    console.error("Sayaç alınamadı", e);
-  }
-})();
+  })
+  .catch(error => {
+    console.error("Error fetching visitor data:", error);
+  });

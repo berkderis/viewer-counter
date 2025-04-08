@@ -1,29 +1,20 @@
 
-// API URL'inizi ayarlayın
-const apiUrl = 'https://counter.fuzem-com.workers.dev/';
 
-// API'den verileri al
-fetch(apiUrl)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('API yanıtı başarısız: ' + response.status);
-    }
-    return response.json();
-  })
+// GitHub'daki kodunuza şu değişiklikleri ekleyin
+fetch('https://counter.fuzem-com.workers.dev/')
+  .then(response => response.json())
   .then(data => {
-    console.log("API yanıtı:", data); // Kontrol amaçlı
+    console.log("API yanıtı alındı:", data); // API yanıtını görelim
     
-    // DOM elemanına erişim
-    const counterElement = document.getElementById('viewer-count');
-    
-    // Element varsa değeri güncelle
-    if (counterElement) {
-      counterElement.textContent = data.active_visitors;
-      console.log("Sayaç güncellendi:", data.active_visitors);
+    // aktif ziyaretçi sayısını göster
+    const viewerCount = document.getElementById('viewer-count');
+    if (viewerCount) {
+      console.log("Eleman bulundu, değer güncelleniyor:", data.active_visitors);
+      viewerCount.textContent = data.active_visitors;
     } else {
-      console.error("'viewer-count' ID'li eleman bulunamadı!");
+      console.error("viewer-count elemanı bulunamadı!");
     }
   })
   .catch(error => {
-    console.error("Hata:", error);
+    console.error("API hatası:", error);
   });
